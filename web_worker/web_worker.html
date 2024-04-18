@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Worker Example</title>
+</head>
+<body>
+  <h1>Web Worker Example</h1>
+  <p>Counting in the background...</p>
+  <p id="result"></p>
+
+  <script>
+    // Create a new web worker
+    const worker = new Worker('web_worker.js');
+
+    // Message received from the worker
+    worker.onmessage = function(event) {
+      document.getElementById('result').textContent = 'Count: ' + event.data;
+    };
+
+    worker.postMessage = function(event) {
+      console.log(event);
+    }
+
+    // Error handling
+    worker.onerror = function(error) {
+      console.error('Worker error: ', error);
+    };
+  </script>
+</body>
+</html>
